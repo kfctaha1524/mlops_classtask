@@ -4,7 +4,8 @@ pipeline {
     buildDiscarder(logRotator(numToKeepStr: '5'))
   }
   environment {
-    DOCKERHUB_CREDENTIALS = credentials('taha-docker')
+     DOCKERHUB_USERNAME = 'tahanoman'
+    DOCKERHUB_PASSWORD = 'kfctaha1524'
   }
   stages {
     stage('Build') {
@@ -14,7 +15,8 @@ pipeline {
     }
     stage('Login') {
       steps {
-        powershell '$DOCKERHUB_CREDENTIALS_PSW | docker login -u $env:DOCKERHUB_CREDENTIALS_USR --password-stdin'
+        powershell 'echo %DOCKERHUB_PASSWORD% | docker login -u %DOCKERHUB_USERNAME% --password-stdin'
+
       }
     }
     stage('Push Docker Image') {
